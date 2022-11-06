@@ -1,7 +1,7 @@
 <template>
     <h2 class="tit"> FLV </h2>
     <div class="video-box">
-        <video id="myFlvVideo" ref="videoRef" autoplay controls></video>
+        <video ref="videoRef" controls></video>
     </div>
 </template>
 <script lang="ts" setup>
@@ -10,11 +10,12 @@
 
     const videoRef = ref();
     const flvPlayer = ref();
+    const videoSrc = 'http://pili-live-hdl.qhmywl.com/dsdtv/4677cf6625ce01b236bbb58f99094d51.flv';
     const createVideo = () => {
         if (flvjs.isSupported()) {
             flvPlayer.value = flvjs.createPlayer({
                 type: 'flv',
-                url: 'https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-720p.flv' //你的url地址
+                url: videoSrc
             });
             flvPlayer.value.attachMediaElement(videoRef.value);
             flvPlayer.value.load();

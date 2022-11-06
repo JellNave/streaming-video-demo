@@ -1,46 +1,56 @@
 <template>
-    <h2 class="tit"> FLV </h2>
+    <h2 class="tit"> Video </h2>
     <div class="video-box">
-        <video id="myFlvVideo" ref="videoRef" autoplay controls></video>
+        <video ref="videoRef"></video>
     </div>
 </template>
 <script lang="ts" setup>
     import { nextTick, onMounted, onUnmounted, ref } from 'vue';
-    import flvjs from 'flv.js';
+    import Video from 'video.js';
+    import 'video.js/dist/video-js.css';
 
     const videoRef = ref();
-    const flvPlayer = ref();
+    const videoPlayer = ref();
+    const videoSrc =
+        'http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/hnwshd/4000000/mnf.m3u8';
     const createVideo = () => {
-        if (flvjs.isSupported()) {
-            flvPlayer.value = flvjs.createPlayer({
-                type: 'flv',
-                url: 'https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-720p.flv' //你的url地址
-            });
-            flvPlayer.value.attachMediaElement(videoRef.value);
-            flvPlayer.value.load();
-            const res = flvStart();
-            if (res) {
-                res.then(() => {}).catch(() => {
-                    alert('请点击播放按钮开始播放视频');
-                });
+        videoPlayer.value = Video(
+            videoRef.value,
+            {
+                controls: true,
+                sources: [
+                    {
+                        src: videoSrc
+                    }
+                ],
+                preload: 'auto',
+                width: '500px',
+                height: '500px'
+            },
+            () => {
+                console.log('播放器创建完成');
             }
+        );
+        const res = videoStart();
+        if (res) {
+            res.then(() => {}).catch(() => {
+                alert('请点击播放按钮开始播放视频');
+            });
         }
     };
+
     //开始
-    const flvStart = () => {
-        return flvPlayer.value.play();
+    const videoStart = () => {
+        return videoPlayer.value.play();
     };
     //暂停
-    const flvPause = () => {
-        flvPlayer.value.pause();
+    const videoPause = () => {
+        videoPlayer.value.pause();
     };
     //销毁
     const flvDestroy = () => {
-        flvPause();
-        flvPlayer.value.unload();
-        flvPlayer.value.detachMediaElement();
-        flvPlayer.value.destroy();
-        flvPlayer.value = null;
+        videoPause();
+        videoPlayer.value.dispose();
     };
     onMounted(() => {
         nextTick(() => {
@@ -52,6 +62,7 @@
     });
 </script>
 <style scoped>
+    @import 'video.js/dist/video-js.css';
     .tit {
         font-size: 20px;
         font-weight: 500;
@@ -63,7 +74,7 @@
         padding: 100px;
     }
     video {
-        width: 800px;
-        height: 500px;
+        width: 100%;
+        height: 100%;
     }
 </style>

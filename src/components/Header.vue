@@ -62,5 +62,6 @@
     }
     .menu-item {
         margin-left: 12px;
+        cursor: pointer;
     }
 </style>
