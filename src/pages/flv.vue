@@ -10,7 +10,8 @@
 
     const videoRef = ref();
     const flvPlayer = ref();
-    const videoSrc = 'http://pili-live-hdl.qhmywl.com/dsdtv/4677cf6625ce01b236bbb58f99094d51.flv';
+    const videoSrc =
+        'https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-720p.flv';
     const createVideo = () => {
         if (flvjs.isSupported()) {
             flvPlayer.value = flvjs.createPlayer({
